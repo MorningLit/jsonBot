@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const checkWord = require("check-word");
+const emojiStrip = require("emoji-strip");
 
 require("dotenv").config();
 const words = checkWord("en");
@@ -15,14 +16,13 @@ client.on("ready", () => {
 client.on("message", (msg) => {
   if (!msg.author.bot) {
     // must not be a bot
-    var str = msg.content.split(" ");
-    console.log(str);
+    var str = emojiStrip(msg.content).split(" ");
 
     if (str.length === 1 && str[0] === `${prefix}retarded`) {
       retarded = !retarded;
       return retarded
-        ? msg.channel.send(`I am now retarded 👍`)
-        : msg.channel.send(`I am now big brain 👍`);
+        ? msg.channel.send(`I am now yason 🥴`)
+        : msg.channel.send(`I am now JASON 💪`);
     }
 
     if (str.length === 2) {
@@ -33,9 +33,9 @@ client.on("message", (msg) => {
         str[0] !== str[1]
       ) {
         // switches first letter of the 2 words
-        console.log(str[0], str[1]);
         let newFirstWord = str[1].charAt(0) + str[0].substring(1);
         let newSecondWord = str[0].charAt(0) + str[1].substring(1);
+
         return msg.channel.send(`${newFirstWord} ${newSecondWord}`);
       }
       if (!retarded) {
@@ -61,7 +61,6 @@ client.on("message", (msg) => {
               secondWord.substring(0, i) + firstWord.substring(i);
             var newSecondWord =
               firstWord.substring(0, i) + secondWord.substring(i);
-            console.log(newFirstWord, newSecondWord);
 
             if (words.check(newFirstWord) || words.check(newSecondWord)) {
               // found an actual word after mixmatching
@@ -80,7 +79,6 @@ function emoteMentionLinkChecker(str) {
   if (firstCharLastChar === "<>") return true;
 
   str.replace(/[^a-zA-Z ]/g, "");
-  console.log(str);
   return str.substring(0, 4) === "http" || str === "";
 }
 
