@@ -1,16 +1,17 @@
 const Discord = require("discord.js");
 const checkWord = require("check-word");
 
-const bot = new Discord.Client();
-const TOKEN = "NzE5MzY5Nzg4NTQyOTQzMjUy.Xt2brA.XeQz0mWu-8whgGtD183Gi06SUH8";
-const PREFIX = "j!";
+require("dotenv").config();
 const words = checkWord("en");
+const client = new Discord.Client();
+const token = process.env.TOKEN;
+const prefix = process.env.PREFIX;
 
-bot.on("ready", () => {
-  console.log("This bot is online!");
+client.on("ready", () => {
+  console.log("I am online!");
 });
 
-bot.on("message", (msg) => {
+client.on("message", (msg) => {
   if (!msg.author.bot) {
     // must not be a bot
     var str = msg.content.split(" ");
@@ -38,4 +39,4 @@ bot.on("message", (msg) => {
   }
 });
 
-bot.login(TOKEN);
+client.login(token);
