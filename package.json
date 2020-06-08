@@ -2,10 +2,10 @@
   "name": "json",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node .",
+    "start": "node bot.js",
     "production": "NODE_ENV=production&&npm start",
     "development": "set NODE_ENV=development&&npm start"
   },
