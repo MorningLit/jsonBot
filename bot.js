@@ -97,8 +97,14 @@ client.on("message", (msg) => {
             var newSecondWord =
               firstWord.substring(0, i) + secondWord.substring(i);
 
-            if (words.check(newFirstWord) || words.check(newSecondWord)) {
+            if (
+              (words.check(newFirstWord) || words.check(newSecondWord)) &&
+              secondWord.substring(0, i) !== firstWord.substring(0, i) &&
+              firstWord !== newSecondWord &&
+              secondWord !== newFirstWord
+            ) {
               // found an actual word after mixmatching
+              console.log(`${newFirstWord} ${newSecondWord}`);
               if (!twoWords) {
                 let newSentence = msg.content
                   .replace(arr[0], newFirstWord)
