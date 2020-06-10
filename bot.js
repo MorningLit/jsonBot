@@ -53,10 +53,11 @@ client.on("message", (msg) => {
     if (!twoWords && arr.length > 2) {
       // need scan all words
       arr = find1_2Longest(arr);
-      console.log("STEP 1: " + arr);
     }
 
     if (arr.length === 2) {
+      // msg must be 2 words
+
       if (retarded && arr[0] !== arr[1]) {
         // switches first letter of the 2 words
         let newFirstWord = arr[1].charAt(0) + arr[0].substring(1);
@@ -64,38 +65,30 @@ client.on("message", (msg) => {
 
         if (!twoWords) {
           let newSentence = msg.content
-            .replace(arr[0], newFirstWord)
-            .replace(arr[1], newSecondWord);
+            .replace(arr[1], newSecondWord)
+            .replace(arr[0], newFirstWord);
+
           return msg.channel.send(newSentence);
         }
         return msg.channel.send(`${newFirstWord} ${newSecondWord}`);
       }
 
       if (!retarded) {
-        // msg must be 2 words
         var firstWord = arr[0].toLowerCase();
         var secondWord = arr[1].toLowerCase();
-        console.log(
-          `${firstWord}: ${words.check(firstWord)} ${secondWord}: ${words.check(
-            secondWord
-          )}`
-        );
-        if (
-          (!words.check(firstWord) || !words.check(secondWord)) &&
-          firstWord !== secondWord
-        ) {
-          /*
-           must not be an emote/mention/link
-           and one of the words must not be a word
-           and they must not be equal words
-          */
 
+        if (firstWord !== secondWord) {
+          // they must not be equal words
           var minLength = Math.min(firstWord.length, secondWord.length);
+
           for (var i = 1; i <= minLength; i++) {
             var newFirstWord =
               secondWord.substring(0, i) + firstWord.substring(i);
             var newSecondWord =
               firstWord.substring(0, i) + secondWord.substring(i);
+            console.log(
+              `${firstWord}, ${newFirstWord}, ${secondWord}, ${newSecondWord}`
+            );
 
             if (
               (words.check(newFirstWord) || words.check(newSecondWord)) &&
@@ -104,11 +97,14 @@ client.on("message", (msg) => {
               secondWord !== newFirstWord
             ) {
               // found an actual word after mixmatching
-              console.log(`${newFirstWord} ${newSecondWord}`);
+              console.log(
+                `ARR0:${arr[0]}, NEWFIRSTWORD:${newFirstWord} ARR1:${arr[1]} NEWSECONDWORD:${newSecondWord}`
+              );
               if (!twoWords) {
                 let newSentence = msg.content
-                  .replace(arr[0], newFirstWord)
-                  .replace(arr[1], newSecondWord);
+                  .replace(arr[1], newSecondWord)
+                  .replace(arr[0], newFirstWord);
+
                 return msg.channel.send(newSentence);
               }
               return msg.channel.send(`${newFirstWord} ${newSecondWord}`);
