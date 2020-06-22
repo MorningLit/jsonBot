@@ -12,7 +12,7 @@ const jasonID = "135329505207123969";
 
 var retarded = false;
 var twoWords = true;
-var silenced = false;
+var silenced = true;
 
 client.on("ready", () => {
   console.log("I am online!");
